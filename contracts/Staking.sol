@@ -35,8 +35,8 @@ contract Staking {
 
     function stake(uint256 _amount) external returns(bool){
         if(msg.sender == address(0)){revert ZERO_ACCOUNT_DETECTED();}
-        if(staked[msg.sender]!=0){revert ALREADY_STAKED();}
         if(_amount <= 0){revert ZERO_STAKING_DETECTED();}
+        if(staked[msg.sender]!=0){revert ALREADY_STAKED();}
         if(!IERC20(tokenAdress).transferFrom(msg.sender, address(this), _amount)){revert STAKING_FAILED();}
         stakedBalance= stakedBalance + _amount;
         staked[msg.sender]= staked[msg.sender] + _amount;

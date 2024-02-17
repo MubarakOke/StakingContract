@@ -42,6 +42,13 @@ import {
             const stakedBalance= await staking.checkUserStakedBalance(account1.address)
             expect(stakedBalance).to.equal(amountToStake);
         });
+
+        it("can not stake zero successfully", async () => {
+            const { staking, account1, amountToStake} = await loadFixture(deployStaking);
+            await approveERC20(account1, staking.target, amountToStake)
+            await expect(staking.stake(0)).to.be.revertedWithCustomError(staking, 'ZERO_STAKING_DETECTED')
+        });
+
     })     
            
   });
